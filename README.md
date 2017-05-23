@@ -49,9 +49,9 @@ Examples
     date.getFullYear() // 2016
 
     date.hour  // undefined
-    date.getHours() // undefined
+    date.getHours() // Uncaught TypeError: date.getHours is not a function
 
-    dateFns.add(date, 5, 'minutes') // ERROR?
+    dateFns.addDays(date, 5) // ERROR?
 
     // 11:30 am UTC; no seconds
     const time = new Time(11, 30)

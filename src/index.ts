@@ -120,14 +120,13 @@ export class DateOnly {
     getUTCFullYear() {return this.wrapped.getUTCFullYear()}
     getUTCMonth() {return this.wrapped.getUTCMonth()}
   
-
     toString() { return this.wrapped.toDateString() }
 
-  toISOString() {
- // todo 0-pad month and day.
- return this.year.toString() + '-' + (this.month + 1).toString() + '-' +
-   this.day.toString()
-  }
+    toISOString() {
+    // todo 0-pad month and day.
+    return this.year.toString() + '-' + (this.month + 1).toString() + '-' +
+        this.day.toString()
+    }
 }
 
 
@@ -154,7 +153,7 @@ export function today() {
 }
 
 
-// import * as dateFns from 'date-fns'
+import * as dateFns from 'date-fns'
 
 // let dt = new DateOnly(1999, 9, 9)
 
@@ -163,7 +162,7 @@ console.log(dt.year)
 
 let date = new DateOnly(2001, 4, 22)
 console.log(date.getDate())
-// console.log(date.getHours())
+
 
 let time = new Time(11, 30)
 console.log(time.getHours())
@@ -176,3 +175,10 @@ console.log(combine(date, time))
 console.log(combine(date, time).toString())
 // let dt = new DateTime()
 // console.log(dt.getHours(), "YEAH")
+
+
+console.log(date.hour)
+
+console.log(dateFns.addMilliseconds(date, 5))
+
+console.log(typeof(dateFns.parse(date)))
