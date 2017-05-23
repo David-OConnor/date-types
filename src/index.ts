@@ -1,212 +1,178 @@
 // todo avoid getter/setter syntax.
 
 
-class DateTime extends Date {
-    constructor(year: number, month: number, day: number, hour: number, minute: number,
-     second: number, millisecond: number) {
-        super(Date)
+export class DateTime {
+    // We don't extend Date; extending built-in classes is awkward and controversial in JS.
+    // There's no multiple inherritance in ES6, so DRY between these classes.
+    readonly year: number
+    readonly month: number
+    readonly day: number
+    readonly hour: number
+    readonly minute: number
+    readonly second: number
+    readonly millisecond: number
+    protected wrapped: Date
 
-        this.setFullYear(year)
-        this.setMonth(month)
-        this.setDate(day)
-        this.setHours(hour)
-        this.setMinutes(minute)
-        this.setSeconds(second)
-        this.setMilliseconds(millisecond)
+    constructor(year: number, month: number, day: number, hour: number=0, minute: number=0,
+        second: number=0, millisecond: number=0) {
+       
+         this.wrapped = new Date(year, month, day, hour, minute, second, millisecond)
 
-    }
+         this.year = year
+         this.month = month
+         this.day = day
+         this.hour = hour
+         this.minute = minute
+         this.second = second
+         this.millisecond = millisecond
 
+      }
+
+      // Allow access to built-in methods for compatibility
+    getDate() {return this.wrapped.getDate()}
+    getDay() {return this.wrapped.getDay()}
+    getFullYear() {return this.wrapped.getFullYear()}
+    getHours() {return this.wrapped.getHours()}
+    getMilliseconds() {return this.wrapped.getMilliseconds()}
+    getMinutes() {return this.wrapped.getMinutes()}
+    getMonth() {return this.wrapped.getMonth()}
+    getSeconds() {return this.wrapped.getSeconds()}
+    getTime() {return this.wrapped.getTime()}
+    getTimezoneOffset() {return this.wrapped.getTimezoneOffset()}
+    getUTCDate() {return this.wrapped.getUTCDate()}
+    getUTCDay() {return this.wrapped.getUTCDay()}
+    getUTCFullYear() {return this.wrapped.getUTCFullYear()}
+    getUTCHours() {return this.wrapped.getUTCHours()}
+    getUTCMilliseconds() {return this.wrapped.getUTCMilliseconds()}
+    getUTCMinutes() {return this.wrapped.getUTCMinutes()}
+    getUTCMonth() {return this.wrapped.getUTCMonth()}
+    getUTCSeconds() {return this.wrapped.getUTCSeconds()}
+  
+
+    toString() { return this.wrapped.toString() }
 }
 
 
-class Time extends Date {
-    constructor(hour: number, minute: number, second: number, millisecond: number) {
-        super(Date)
+export class Time {
+    readonly hour: number
+    readonly minute: number
+    readonly second: number
+    readonly millisecond: number
+    protected wrapped: Date
 
-        this.setHours(hour)
-        this.setMinutes(minute)
-        this.setSeconds(second)
-        this.setMilliseconds(millisecond)
-    }
+    constructor(hour: number=0, minute: number=0,
+        second: number=0, millisecond: number=0) {
+       
+         this.wrapped = new Date(0, 0, 0, hour, minute, second, millisecond)
 
-    getDate() {
-        return undefined
-    }
+         this.hour = hour
+         this.minute = minute
+         this.second = second
+         this.millisecond = millisecond
 
-    getDay() {
-        return undefined
-    }
+      }
 
-    getFullYear() {
-        return undefined
-    }
+    // Allow access to built-in methods for compatibility
+    getHours() {return this.wrapped.getHours()}
+    getMilliseconds() {return this.wrapped.getMilliseconds()}
+    getMinutes() {return this.wrapped.getMinutes()}
+    getSeconds() {return this.wrapped.getSeconds()}
+    getTime() {return this.wrapped.getTime()}
+    getTimezoneOffset() {return this.wrapped.getTimezoneOffset()}
+    getUTCHours() {return this.wrapped.getUTCHours()}
+    getUTCMilliseconds() {return this.wrapped.getUTCMilliseconds()}
+    getUTCMinutes() {return this.wrapped.getUTCMinutes()}
+    getUTCSeconds() {return this.wrapped.getUTCSeconds()}
 
-    getMonth() {
-        return undefined
-    }
-
-    getUTCDate() {
-        return undefined
-    }
-
-    getUTCDay() {
-        return undefined
-    }
-
-    getUTCFullYear() {
-        return undefined
-    }
-
-    getUTCMonth() {
-        return undefined
-    }
-
-    getYear() {
-        return undefined
-    }
-
-    setDate() {
-        return undefined
-    }
-
-    setFullYear() {
-        return undefined
-    }
-
-    setMonths() {
-        return undefined
-    }
-
-    setUTCDate() {
-        return undefined
-    }
-
-    setUTCFullYear() {
-        return undefined
-    }
-
-    setUTCMonth() {
-        return undefined
-    }
-
-    setYear() {
-        return undefined
-    }
-
-    toDateString() {
-        return undefined
-    }
-
-    toString() {
-        return this.toTimeString()
-    }
-
+    // Conversion methods
+    toString() { return this.wrapped.toTimeString() }
+      
     toISOString() {
         // todo timezone? 0-padding.
-        return this.getHours.toString() + ':' + this.getMinutes().toString() + ':' + this.getSeconds().toString() + 
-            '.' + this.getMilliseconds().toString()
+        return this.hour.toString() + ':' + this.minute.toString() + ':' + this.second.toString() + 
+        '.' + this.millisecond.toString()
     }
-
 }
 
 
-class DateOnly extends Date {
+export class DateOnly {
+    readonly year: number
+    readonly month: number
+    readonly day: number
+    protected wrapped: Date
+
     constructor(year: number, month: number, day: number) {
-        super(Date)
+       
+        this.wrapped = new Date(year, month, day)
 
-        this.setFullYear(year)
-        this.setMonth(month)
-        this.setDate(day)
-    }
+        this.year = year
+        this.month = month
+        this.day = day
+      }
 
-    getHours() {
-        return undefined
-    }
+    // Allow access to built-in methods for compatibility
+    getDate() {return this.wrapped.getDate()}
+    getDay() {return this.wrapped.getDay()}
+    getFullYear() {return this.wrapped.getFullYear()}
+    getMonth() {return this.wrapped.getMonth()}
+    getUTCDate() {return this.wrapped.getUTCDate()}
+    getUTCDay() {return this.wrapped.getUTCDay()}
+    getUTCFullYear() {return this.wrapped.getUTCFullYear()}
+    getUTCMonth() {return this.wrapped.getUTCMonth()}
+  
 
-    getMilliseconds() {
-        return undefined
-    }
+    toString() { return this.wrapped.toDateString() }
 
-    getMinutes() {
-        return undefined
-    }
-
-    getSeconds() {
-        return undefined
-    }
-
-    getTime() {
-        return undefined
-    }
-
-    getTimezoneOffset() {
-        return undefined
-    }
-
-    getUTCHours() {
-        return undefined
-    }
-
-    getUTCMilliseconds() {
-        return undefined
-    }
-
-    getUTCMinutes() {
-        return undefined
-    }
-
-    getUTCSeconds() {
-        return undefined
-    }
-
-    setHours() {
-        return undefined
-    }
-
-    setMilliseconds() {
-        return undefined
-    }
-
-    setMinutes() {
-        return undefined
-    }
-
-    setSeconds() {
-        return undefined
-    }
-
-    setTime() {
-        return undefined
-    }
-
-    setUTCHours() {
-        return undefined
-    }
-
-    setUTCMilliseconds() {
-        return undefined
-    }
-
-    setUTCMinutes() {
-        return undefined
-    }
-
-    setUTCSeconds() {
-        return undefined
-    }
-
-    toString() {
-        return this.toDateString()
-    }
-
-    toISOString() {
-        // todo 0-pad month and day.
-        return this.getFullYear().toString() + '-' + (this.getMonth() + 1).toString() + '-' +
-            this.getDate().toString()
-    }
-
-    toLocaleTimeString() {
-        return undefined
-    }
-
+  toISOString() {
+ // todo 0-pad month and day.
+ return this.year.toString() + '-' + (this.month + 1).toString() + '-' +
+   this.day.toString()
+  }
 }
+
+
+
+
+export function split(dt: DateTime | Date) {
+    // Split a DateTime (JS Date) into components
+    const date = new DateOnly(dt.getUTCFullYear(), dt.getUTCMonth(), dt.getUTCDate())
+    const time = new Time(dt.getUTCHours(), dt.getUTCMinutes(), dt.getUTCSeconds(), dt.getUTCMilliseconds())
+
+    return [date, time]
+}
+
+
+export function combine(date: DateOnly, time: Time) {
+    // Combine a date and time into a datetime
+    return new DateTime(date.year, date.month, date.day, time.hour, time.minute, time.second, time.millisecond)
+}
+
+
+export function today() {
+    // Return the current date.
+    return split(new Date())[0]
+}
+
+
+// import * as dateFns from 'date-fns'
+
+// let dt = new DateOnly(1999, 9, 9)
+
+let dt = new DateTime(1999, 9, 9, 0, 0, 0, 0)
+console.log(dt.year)
+
+let date = new DateOnly(2001, 4, 22)
+console.log(date.getDate())
+// console.log(date.getHours())
+
+let time = new Time(11, 30)
+console.log(time.getHours())
+console.log(time.hour)
+
+console.log(date.toString())
+console.log(time.toString())
+
+console.log(combine(date, time))
+console.log(combine(date, time).toString())
+// let dt = new DateTime()
+// console.log(dt.getHours(), "YEAH")

@@ -1,21 +1,67 @@
-DnD Scroll
+Date Types
 ==========
 
-Add-on for React DnD. Auto scroll when dragging to the top or bottom of the window; compensates for inability to use mousewheel or keyboard scrolling while dragging in React DnD's default (HTML5) backend.
+Date Types provides separate, immutable date and time types for Javascript. Theese types are designed to be used with the date-fns library. They're thin wrappers for the built-in Date type, and retain applicable methods. They introduce new, simpler properties to access components, and use UTC wherever possible.
 
-Example use. Check out examples/basic_syntax for an explanation of the props:
-    import Scroller from 'dnd-scroll'
+Motivation
+----------
+Javascript's two leading libraries for dates and times, the built-in Date, and MomentJS, only provide combined dates and times. Dates are represented in these libraries by creating a datetime with 0 for all time components; times are represented by creating a datetime with 0 for all date components. This feels imprecise, and prone to errors; there are many cases where you might represent a pure date: Asking for its hours property shouldn't return 0; the query doens't make sense. Nor does adding 5 minutes to it.
 
-    const TopLevelComponenet = () => (
-        // Make the scroller for your app.
-        <div>
-            <Scroller itemType={ItemTypes.MYITEM} target={target}
-                              targetCollect={collectTarget} enabled={draggingSomething} />
-            <h1>My page heading</h1>
-           <p>My page content</p>
-        </div>
-    )
+Types
+-----
+DateOnly: Wrapper for builtin Date, with all setters, and methods relating to time removed
+New properties:
+ - year: year component
+ - month: month component
+ - day: day of the month component
 
-Bottom line: Import the module, and include its Scroller component anywhere in your top-level component. Connect it to your React-DnD boilerplate functions using props. Configure the (scroll zone) height and speed props if desired.
+Time: Wrapper for builtin Date, with all setters, and methods relating to date removed
+New properties - all use UTC only.
+ - hour: hour component
+ - minute: minute component
+ - second: second component
+ - millisecond: millisecond component
 
-https://github.com/David-OConnor/dnd-scroll
+DateTime: Wrapper for builtin Date, with all setters removed
+New properties - properties from both DateOnly and Time combined.
+
+Functions
+---------
+
+
+Setup
+-----
+    npm install date-types
+    // or
+    yarn add date-types
+
+    import { DateOnly, Time, DateTime } from 'date-types'
+    import * as dt from 'date-types'
+
+
+Examples
+--------
+
+    // March 3, 2016; retains the built-in Date's use of 0-based Month indexing.
+    const date = new DateOnly(2016, 2, 3)
+
+    date.year // 2016
+    date.getFullYear() // 2016
+
+    date.hour  // undefined
+    date.getHours() // undefined
+
+    dateFns.add(date, 5, 'minutes') // ERROR?
+
+    // 11:30 am UTC; no seconds
+    const time = new Time(11, 30)
+
+    time.setSeconds(30)  // Uncaught TypeError: time.setSeconds is not a function
+    time.hour = 4  // ERROR; Time (and DateOnly/DateTime) are immutable.
+
+    dt.today() // A DateOnly object of the current day
+
+    dt.combine(date, time) // March 3, 2016, 11:30 am UTC
+
+
+https://github.com/David-OConnor/date-types
