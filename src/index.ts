@@ -1,7 +1,7 @@
 // todo avoid getter/setter syntax.
 
 
-export class DateTime {
+class DateTime {
     // We don't extend Date; extending built-in classes is awkward and controversial in JS.
     // There's no multiple inherritance in ES6, so DRY between these classes.
     readonly year: number
@@ -53,7 +53,7 @@ export class DateTime {
 }
 
 
-export class Time {
+class Time {
     readonly hour: number
     readonly minute: number
     readonly second: number
@@ -84,8 +84,20 @@ export class Time {
     getUTCMinutes() {return this.wrapped.getUTCMinutes()}
     getUTCSeconds() {return this.wrapped.getUTCSeconds()}
 
+
+    getDate() {return this.wrapped.getDate()}
+    getDay() {return this.wrapped.getDay()}
+    getFullYear() {return this.wrapped.getFullYear()}
+    getMonth() {return this.wrapped.getMonth()}
+    getUTCDate() {return this.wrapped.getUTCDate()}
+    getUTCDay() {return this.wrapped.getUTCDay()}
+    getUTCFullYear() {return this.wrapped.getUTCFullYear()}
+    getUTCMonth() {return this.wrapped.getUTCMonth()}
+
+
     // Conversion methods
-    toString() { return this.wrapped.toTimeString() }
+    // todo toTimeString is causing bugs with datefn validation.
+    toString() { return this.wrapped.toString() }
       
     toISOString() {
         // todo timezone? 0-padding.
@@ -95,7 +107,7 @@ export class Time {
 }
 
 
-export class DateOnly {
+class DateOnly {
     readonly year: number
     readonly month: number
     readonly day: number
@@ -132,7 +144,7 @@ export class DateOnly {
 
 
 
-export function split(dt: DateTime | Date) {
+function split(dt: DateTime | Date) {
     // Split a DateTime (JS Date) into components
     const date = new DateOnly(dt.getUTCFullYear(), dt.getUTCMonth(), dt.getUTCDate())
     const time = new Time(dt.getUTCHours(), dt.getUTCMinutes(), dt.getUTCSeconds(), dt.getUTCMilliseconds())
@@ -141,23 +153,24 @@ export function split(dt: DateTime | Date) {
 }
 
 
-export function combine(date: DateOnly, time: Time) {
+function combine(date: DateOnly, time: Time) {
     // Combine a date and time into a datetime
     return new DateTime(date.year, date.month, date.day, time.hour, time.minute, time.second, time.millisecond)
 }
 
 
-export function today() {
+function today() {
     // Return the current date.
     return split(new Date())[0]
 }
 
+export {DateTime, Time, DateOnly, today}
 
 import * as dateFns from 'date-fns'
 
 // let dt = new DateOnly(1999, 9, 9)
 
-let dt = new DateTime(1999, 9, 9, 0, 0, 0, 0)
+let dt = new DateTime(1999, 9, 9, 1, 0, 0, 0)
 console.log(dt.year)
 
 let date = new DateOnly(2001, 4, 22)
@@ -181,4 +194,7 @@ console.log(date.hour)
 
 console.log(dateFns.addMilliseconds(date, 5))
 
-console.log(typeof(dateFns.parse(date)))
+console.log(dateFns.format(date, 'YYYY-MMM-DD'))
+console.log(dateFns.format(time, 'HH:mm'))
+console.log(dateFns.format(dt, 'HH:mm'))
+
