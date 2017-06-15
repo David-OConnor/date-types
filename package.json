@@ -1,13 +1,21 @@
 {
   "name": "date-types",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Dedicated date, time, and datetime types",
-  "keywords": ["date", "time", "datetime", "datefns", "type", "puredate"],
+  "keywords": [
+    "date",
+    "time",
+    "datetime",
+    "datefns",
+    "type",
+    "puredate"
+  ],
   "node": "7.8.0",
-  "main": "webpack.config.js",
+  "main": "./dist/index.js",
   "dependencies": {
-    
+    "date-fns": "^1.28.5"
   },
+  "types": "./dist/index.d.ts",
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

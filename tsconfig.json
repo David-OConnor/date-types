@@ -7,7 +7,8 @@
     "experimentalDecorators": true,
     "jsx": "react",
     "moduleResolution": "node", // todo do I want this?
-    "removeComments": true
+    "removeComments": true,
+    "declaration": true
 //    "preserveConstEnums": true,
   },
 
