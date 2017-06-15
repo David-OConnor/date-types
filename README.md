@@ -25,6 +25,8 @@ New properties - all use UTC only.
 DateTime: Wrapper for builtin Date, with all setters removed
 New properties - properties from both DateOnly and Time combined.
 
+TimeDelta: Stores the difference between two dates or times. Can be added to or subtracted from them using functions provided by this module.
+
 Functions
 ---------
 
@@ -42,6 +44,7 @@ Setup
 Examples
 --------
 Creating dates and times
+
     // March 3, 2016; retains the built-in Date's use of 0-based Month indexing.
     const date = new DateOnly(2016, 2, 3)
 
@@ -54,41 +57,51 @@ Creating dates and times
     const today = dt.today() // A DateOnly object of the current day
 
 Create a time delta: A difference between two times or dates
+
     const delta = new TimeDelta(1, 1000)  / One day, one second
 
 Applicable methods from the built-in Date type are included:
+
     date.year // 2016
     date.getFullYear() // 2016
 
-Methods that mutate the date/time, or use inapplicable methods are not:
+Methods that mutate the date/time, or use inapplicable methods are not
+
     time.setSeconds(30)  // Uncaught TypeError: time.setSeconds is not a function
     time.hour = 4  // ERROR; Time (and DateOnly/DateTime) are immutable.
     date.hour  // undefined
     date.getHours() // Uncaught TypeError: date.getHours is not a function
 
 Add or subtract amounts of time
+
     dt.add(date, 5, "days") // March 8, 2016
     dt.add(time, -5, "hours")  // 06:35
 
 Adding amounts to the type that are innapropriate raises exceptions
+
     dt.add(date, 5, "hours") // Exception: "Can't add hours to a date."
     dt.add(time, 2, "days") // Exception: "Can't add days to a time."
 
 Create a time delta by taking the difference between two date/time objects.
+
     const delta = dt.difference(date, new DateOnly(2016, 2, 1)
 
 Add or subtract a delta from a date/time
+
     dt.addDelta(date, delta)
     dt.subDelta(date, delta)
 
 You can't subtract a delta that includes a time component from a DateOnly, and vice versa:
+
     dt.addDelta(time, delta)  // Exception: "Can't add a delta that includes date components to a time."
 
 
 Convert a date or time to a string
+
     dt.format(datetime, 'YYYY-MM-DD HH:mm')  // '2016-03-03 11:30'
 
 But only if the string token makes sense for the type you're using
+
     date.format(datetime, 'YYYY-MM-DD HH:mm') // 'String format tokens that only apply to times are not allowed on dateOnlys.'
 
 
