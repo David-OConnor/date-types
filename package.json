@@ -1,12 +1,12 @@
 {
   "name": "date-types",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Dedicated date, time, and datetime types",
   "keywords": [
     "date",
     "time",
     "datetime",
-    "datefns",
+    "datefunctions",
     "type",
     "puredate"
   ],

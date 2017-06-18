@@ -1,7 +1,7 @@
 Date Types
 ==========
 
-Date Types provides separate, immutable date and time types for Javascript. They're thin wrappers for the built-in Date type, and retain applicable methods. They introduce new, simpler properties to access components, and use UTC wherever possible. Date Types provides functions that work on these types, focusing on using a clean syntax.
+Date Types provides separate, immutable date and time types for Javascript. They're thin wrappers for the built-in Date type, and retain applicable methods. They introduce new, simpler properties to access components, and use UTC wherever possible. Date Types provides functions that work on these types, focusing on using a clean syntax. All types provided by this module are immutable; applicable functions and methods return new instances.
 
 Motivation
 ----------
@@ -37,7 +37,7 @@ Setup
     // or
     yarn add date-types
 
-    import { DateOnly, Time, DateTime } from 'date-types'
+    import { DateOnly, Time, DateTime, TimeDelta } from 'date-types'
     import * as dt from 'date-types'
 
 
@@ -53,6 +53,9 @@ Creating dates and times
 
     // March 3, 2016, 11:30 am UTC; a combination of the above date and time.
     const datetime = dt.combine(date, time)
+
+    // Or:
+    const datetime = new DateTime(2016, 2, 3, 11, 30)
 
     const today = dt.today() // A DateOnly object of the current day
 
@@ -102,7 +105,7 @@ Convert a date or time to a string
 
 But only if the string token makes sense for the type you're using
 
-    date.format(datetime, 'YYYY-MM-DD HH:mm') // 'String format tokens that only apply to times are not allowed on dateOnlys.'
+    dt.format(date, 'YYYY-MM-DD HH:mm') // 'String format tokens that only apply to times are not allowed on dateOnlys.'
 
 
 https://github.com/David-OConnor/date-types
